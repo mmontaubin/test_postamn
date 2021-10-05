@@ -1,0 +1,2054 @@
+{
+	"info": {
+		"_postman_id": "cebb1f6c-6ed9-49e9-a73b-62b984f6d7ab",
+		"name": "Mediboard",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "identicate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"User matching identifier exists\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    const data = jsonData.data;\r",
+									"\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"    pm.expect(data).to.have.property('type', 'identicate');\r",
+									"    pm.expect(data).to.have.property('attributes');\r",
+									"\r",
+									"    const attributes = data.attributes;\r",
+									"\r",
+									"    pm.expect(attributes).to.have.property('is_identicate', true);\r",
+									"\r",
+									"    var login = pm.environment.get(\"Sample_Login\");\r",
+									"\r",
+									"    pm.expect(attributes).to.have.property('login', login);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/identicate?login={{Sample_Login}}&test=lorem",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"identicate"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "{{Sample_Login}}"
+								},
+								{
+									"key": "test",
+									"value": "lorem"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tokens",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Token data is provided\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    const data = jsonData.data;\r",
+									"\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"    pm.expect(data).to.have.property('type', 'token');\r",
+									"    pm.expect(data).to.have.property('attributes');\r",
+									"\r",
+									"    const attributes = data.attributes;\r",
+									"\r",
+									"    pm.expect(attributes).to.have.property('key');\r",
+									"    pm.expect(attributes).to.have.property('hash');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/tokens",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"tokens"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "mediusers",
+			"item": [
+				{
+					"name": "mediusers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains data array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/mediuser/mediusers",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"mediuser",
+								"mediusers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mediusers/{$id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type', 'mediuser');\r",
+									"\r",
+									"    var userId = pm.environment.get('Sample_Mediuser');\r",
+									"\r",
+									"    pm.expect(jsonData.data).to.have.property('id', userId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/mediuser/mediusers/{{Sample_Mediuser}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"mediuser",
+								"mediusers",
+								"{{Sample_Mediuser}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "monitorClient",
+			"item": [
+				{
+					"name": "modules/status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"    pm.expect(jsonData.data).to.have.property('type');\r",
+									"    pm.expect(jsonData.data.type).to.eq('modules_status');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followAuthorizationHeader": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							},
+							{
+								"key": "ox-devtools",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/monitorClient/modules/status",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"monitorClient",
+								"modules",
+								"status"
+							]
+						},
+						"description": "List available bundles"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "monitorServer",
+			"item": [
+				{
+					"name": "autoupdate/auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"\r",
+									"    var instanceId = pm.environment.get('Sample_Monitor_Instance');\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(instanceId);\r",
+									"\r",
+									"    var instanceData = jsonData[instanceId];\r",
+									"\r",
+									"    pm.expect(instanceData).to.eq(0);\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followAuthorizationHeader": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							},
+							{
+								"key": "ox-devtools",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": [\r\n        {{Sample_Monitor_Instance}}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/api/monitorServer/autoupdate/auth",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"monitorServer",
+								"autoupdate",
+								"auth"
+							]
+						},
+						"description": "List available bundles"
+					},
+					"response": []
+				},
+				{
+					"name": "autoupdate/register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains data array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data contains one of requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var data = jsonData.data;\r",
+									"\r",
+									"    pm.expect(data).to.have.length.gt(0);\r",
+									"\r",
+									"    var element = data[0];\r",
+									"\r",
+									"    pm.expect(element).to.be.an(\"object\");\r",
+									"\r",
+									"    pm.expect(element).to.have.property('type');\r",
+									"    pm.expect(element.type).to.eq('monitorServer_auto_update_report');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followAuthorizationHeader": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							},
+							{
+								"key": "ox-devtools",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"id\": \"76-prod\",\r\n    \"date\": \"2021/07/23 14:00:00\",\r\n    \"server_id\": 76,\r\n    \"role\": \"PRODUCTION\",\r\n    \"status\": 1,\r\n    \"elapsed_time\": 64,\r\n    \"branch\": \"2021_06\",\r\n    \"body\": \"This is the report content\",\r\n    \"instance_ids_ok\": [\r\n      {\r\n        \"instance_id\": 44 ,\r\n        \"server_id\": 290,\r\n        \"update_allowed\": true\r\n      }\r\n    ],\r\n    \"instance_ids_ko\": [\r\n    ],\r\n    \"instance_ids_outdated\": [\r\n    ],\r\n    \"instance_ids_unavailable\": [\r\n    ]\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/api/monitorServer/autoupdate/register",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"monitorServer",
+								"autoupdate",
+								"register"
+							]
+						},
+						"description": "List available bundles"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "oauthServer",
+			"item": [
+				{
+					"name": "token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Host}}/api/oauth2/token",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oauth2",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "oxDeploy",
+			"item": [
+				{
+					"name": "modules",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains data array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    pm.expect(jsonData).to.have.property(\"data\");\r",
+									"\r",
+									"    const data = jsonData.data;\r",
+									"\r",
+									"    pm.expect(data).to.be.an(\"array\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxDeploy/modules",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxDeploy",
+								"modules"
+							]
+						},
+						"description": "List available modules"
+					},
+					"response": []
+				},
+				{
+					"name": "bundles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains data array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followAuthorizationHeader": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxDeploy/bundles",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxDeploy",
+								"bundles"
+							]
+						},
+						"description": "List available bundles"
+					},
+					"response": []
+				},
+				{
+					"name": "bundles/{$id}/notify",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data and current date\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"    pm.expect(jsonData.data).to.have.property('type');\r",
+									"    pm.expect(jsonData.data.type).to.eq('deploy_bundles');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followAuthorizationHeader": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxDeploy/bundles/{{Sample_Bundle_UUID}}/notify",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxDeploy",
+								"bundles",
+								"{{Sample_Bundle_UUID}}",
+								"notify"
+							]
+						},
+						"description": "List available bundles"
+					},
+					"response": []
+				},
+				{
+					"name": "bundles/{$id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"    pm.expect(jsonData.data).to.have.property('type');\r",
+									"    pm.expect(jsonData.data.type).to.eq('deploy_bundles');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"followAuthorizationHeader": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "ox-devtools",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxDeploy/bundles/{{Sample_Bundle_UUID}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxDeploy",
+								"bundles",
+								"{{Sample_Bundle_UUID}}"
+							]
+						},
+						"description": "List available bundles"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "oxDeveloppement",
+			"item": [
+				{
+					"name": "tickets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains data array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxDeveloppement/tickets",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxDeveloppement",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ticket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type');\r",
+									"    pm.expect(jsonData.data.type).to.eq('oxDevelopment_tickets');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data id matches the requested object\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('id');\r",
+									"    var objectId = pm.environment.get('Sample_Development_Ticket');\r",
+									"    pm.expect(jsonData.data.id).to.eq(objectId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxDeveloppement/tickets/{{Sample_Development_Ticket}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxDeveloppement",
+								"tickets",
+								"{{Sample_Development_Ticket}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "oxFac",
+			"item": [
+				{
+					"name": "sessions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains data array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxFac/sessions",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxFac",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assistances",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains data array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxFac/assistances",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxFac",
+								"assistances"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "audits",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains data array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxFac/audits",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxFac",
+								"audits"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "audit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type');\r",
+									"    pm.expect(jsonData.data.type).to.eq('oxFac_audits');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data id matches the requested object\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('id');\r",
+									"    var objectId = pm.environment.get('Sample_Fac_Audit');\r",
+									"    pm.expect(jsonData.data.id).to.eq(objectId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxFac/audits/{{Sample_Fac_Audit}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxFac",
+								"audits",
+								"{{Sample_Fac_Audit}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assistance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type');\r",
+									"    pm.expect(jsonData.data.type).to.eq('oxFac_assistances');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data id matches the requested ticket\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('id');\r",
+									"    var objectId = pm.environment.get('Sample_Fac_Assistance');\r",
+									"    pm.expect(jsonData.data.id).to.eq(objectId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxFac/assistances/{{Sample_Fac_Assistance}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxFac",
+								"assistances",
+								"{{Sample_Fac_Assistance}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "plages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains data array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxFac/plages",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxFac",
+								"plages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "plage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type');\r",
+									"    pm.expect(jsonData.data.type).to.eq('oxFac_plages');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data id matches the requested ticket\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('id');\r",
+									"    var objectId = pm.environment.get('Sample_Fac_Plage');\r",
+									"    pm.expect(jsonData.data.id).to.eq(objectId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							},
+							{
+								"key": "ox-devtools",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxFac/plages/{{Sample_Fac_Plage}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxFac",
+								"plages",
+								"{{Sample_Fac_Plage}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "session",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type');\r",
+									"    pm.expect(jsonData.data.type).to.eq('oxFac_sessions');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data id matches the requested ticket\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('id');\r",
+									"    var objectId = pm.environment.get('Sample_Fac_Session');\r",
+									"    pm.expect(jsonData.data.id).to.eq(objectId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxFac/sessions/{{Sample_Fac_Session}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxFac",
+								"sessions",
+								"{{Sample_Fac_Session}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "oxPresta",
+			"item": [
+				{
+					"name": "prestations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains data array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxPresta/prestations",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxPresta",
+								"prestations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "prestation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type');\r",
+									"    pm.expect(jsonData.data.type).to.eq('prestations');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data id matches the requested ticket\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('id');\r",
+									"    var objectId = pm.environment.get('Sample_Presta_Prestation');\r",
+									"    pm.expect(jsonData.data.id).to.eq(objectId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_Token}}",
+								"type": "text"
+							},
+							{
+								"key": "ox-devtools",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Host}}/api/oxPresta/prestations/{{Sample_Presta_Prestation}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxPresta",
+								"prestations",
+								"{{Sample_Presta_Prestation}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "oxSupport",
+			"item": [
+				{
+					"name": "anomalies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body contains data array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_External_Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"instance_uuid\": \"{{Sample_Support_Configuration_Instance}}\",\r\n    \"internal_group_id\": {{Sample_Support_Configuration_Group}},\r\n    \"internal_function_id\": {{Sample_Support_Configuration_Function}},\r\n    \"internal_username\": \"Support Client\",\r\n    \"internal_user_phone\": \"0959545464\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/api/oxSupport/anomalies",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxSupport",
+								"anomalies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "anomalies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_External_Token}}",
+								"type": "text"
+							},
+							{
+								"key": "ox-devtools",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"instance_uuid\": \"{{Sample_Support_Configuration_Instance}}\",\r\n    \"internal_group_id\": {{Sample_Support_Configuration_Group}},\r\n    \"internal_function_id\": {{Sample_Support_Configuration_Function}},\r\n    \"internal_username\": \"Support Client\",\r\n    \"internal_user_phone\": \"0959545464\",\r\n    \"data\": {\r\n        \"label\" : \"Nouvelle anomalie pour test d'intégration\",\r\n        \"title\" : \"Nouvelle anomalie pour test d'intégration.\",\r\n        \"content\": \"Nous avons détecté une nomalie sur ce périmètre, ceci est un test automatisé.\",\r\n        \"criticite\": 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/api/oxSupport/anomalies",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxSupport",
+								"anomalies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "anomalies/{$id}/messages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_External_Token}}",
+								"type": "text"
+							},
+							{
+								"key": "ox-devtools",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"instance_uuid\": \"{{Sample_Support_Configuration_Instance}}\",\r\n    \"internal_group_id\": {{Sample_Support_Configuration_Group}},\r\n    \"internal_function_id\": {{Sample_Support_Configuration_Function}},\r\n    \"internal_username\": \"Support Client\",\r\n    \"internal_user_phone\": \"0959545464\",\r\n    \"data\": {\r\n        \"title\" : \"Message d'anomalie\",\r\n        \"content\": \"Ceci est un message de test décrivant une anomalie.\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/api/oxSupport/anomalies/{{Sample_Support_Anomaly}}/messages",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxSupport",
+								"anomalies",
+								"{{Sample_Support_Anomaly}}",
+								"messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "anomalies/{$id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type');\r",
+									"    pm.expect(jsonData.data.type).to.eq('anomalies');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data id matches the requested ticket\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('id');\r",
+									"    var objectId = pm.environment.get('Sample_Support_Anomaly');\r",
+									"    pm.expect(jsonData.data.id).to.eq(objectId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_External_Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"instance_uuid\": \"{{Sample_Support_Configuration_Instance}}\",\r\n    \"internal_group_id\": {{Sample_Support_Configuration_Group}},\r\n    \"internal_function_id\": {{Sample_Support_Configuration_Function}},\r\n    \"internal_username\": \"Support Client\",\r\n    \"internal_user_phone\": \"0959545464\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/api/oxSupport/anomalies/{{Sample_Support_Anomaly}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxSupport",
+								"anomalies",
+								"{{Sample_Support_Anomaly}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "messages/{$id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type');\r",
+									"    pm.expect(jsonData.data.type).to.eq('messages');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data id matches the requested ticket\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('id');\r",
+									"    var objectId = pm.environment.get('Sample_Support_Message');\r",
+									"    pm.expect(jsonData.data.id).to.eq(objectId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OXAPI-KEY",
+								"value": "{{API_External_Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"instance_uuid\": \"{{Sample_Support_Configuration_Instance}}\",\r\n    \"internal_group_id\": {{Sample_Support_Configuration_Group}},\r\n    \"internal_function_id\": {{Sample_Support_Configuration_Function}},\r\n    \"internal_username\": \"Support Client\",\r\n    \"internal_user_phone\": \"0959545464\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/api/oxSupport/messages/{{Sample_Support_Message}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"oxSupport",
+								"messages",
+								"{{Sample_Support_Message}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "system",
+			"item": [
+				{
+					"name": "configurations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type', 'configurations');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data object contains attributes\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('attributes');\r",
+									"\r",
+									"    var attributes = jsonData.data.attributes;\r",
+									"\r",
+									"    pm.expect(attributes).to.have.property('instance');\r",
+									"    pm.expect(attributes).to.have.property('context');\r",
+									"    pm.expect(attributes).to.have.property('static');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/configurations/{{Sample_Locales_Module}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"configurations",
+								"{{Sample_Locales_Module}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "locales",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type', 'locales');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data object contains attributes\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('attributes');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/locales/{{Sample_Locales_Lang}}/{{Sample_Locales_Module}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"locales",
+								"{{Sample_Locales_Lang}}",
+								"{{Sample_Locales_Module}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modules",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData.data).to.have.length.gt(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var moduleData = jsonData.data[0];\r",
+									"    pm.expect(moduleData).to.have.property('type', 'module');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data object contains attributes\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var moduleData = jsonData.data[0];\r",
+									"    pm.expect(moduleData).to.have.property('attributes');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/modules",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"modules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modules/{$id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type', 'module');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data object contains attributes\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('attributes');\r",
+									"\r",
+									"    var moduleName = pm.environment.get('Sample_Locales_Module');\r",
+									"    var attributes = jsonData.data.attributes;\r",
+									"\r",
+									"    pm.expect(attributes).to.have.property('mod_version');\r",
+									"    pm.expect(attributes).to.have.property('mod_type', 'core');\r",
+									"    pm.expect(attributes).to.have.property('mod_name', moduleName);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/modules/{{Sample_Locales_Module}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"modules",
+								"{{Sample_Locales_Module}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "preferences",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type', 'preferences');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data object contains attributes\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('attributes');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/preferences/{{Sample_Locales_Module}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"preferences",
+								"{{Sample_Locales_Module}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "schema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData.data).to.have.length.gt(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var moduleData = jsonData.data[0];\r",
+									"    pm.expect(moduleData).to.have.property('type', 'schema');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data object contains attributes\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var moduleData = jsonData.data[0];\r",
+									"    pm.expect(moduleData).to.have.property('attributes');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/schemas/{{Sample_Resource_Name}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"schemas",
+								"{{Sample_Resource_Name}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "history",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData.data).to.have.length.gt(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var moduleData = jsonData.data[0];\r",
+									"    pm.expect(moduleData).to.have.property('type', 'history');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data object contains attributes\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var moduleData = jsonData.data[0];\r",
+									"    pm.expect(moduleData).to.have.property('attributes');\r",
+									"\r",
+									"    var attributes = moduleData.attributes;\r",
+									"\r",
+									"    pm.expect(attributes).to.have.property('date');\r",
+									"    pm.expect(attributes).to.have.property('fields');\r",
+									"    pm.expect(attributes).to.have.property('type');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/history/{{Sample_Resource_Name}}/{{Sample_Resource_Identifier}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"history",
+								"{{Sample_Resource_Name}}",
+								"{{Sample_Resource_Identifier}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "preferences/{$id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response contains valid data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type is of the requested resource\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('type', 'preferences');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data object contains attributes\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property('attributes');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/preferences/{{Sample_Locales_Module}}/{{Sample_Mediuser}}",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"preferences",
+								"{{Sample_Locales_Module}}",
+								"{{Sample_Mediuser}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status replies platform is online\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    const data = jsonData.data;\r",
+									"\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"    pm.expect(data).to.have.property('type');\r",
+									"    pm.expect(data.type).to.eq('api_status');\r",
+									"    pm.expect(data).to.have.property('attributes');\r",
+									"\r",
+									"    const attributes = data.attributes;\r",
+									"\r",
+									"    pm.expect(attributes).to.have.property('status', 'online');   \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/api/status",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"api",
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{API_Token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "X-OXAPI-KEY",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"if (pm.environment.name === \"Localhost\") {",
+					"  pm.request.headers.add({key: 'ox-devtools', value: '2' });",
+					"}",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
